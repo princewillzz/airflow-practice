@@ -9,7 +9,13 @@ import requests
 import json
 import os
 
-SLACK_WEBHOOK_URL = "https://hooks.slack.com/services/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"
+from dotenv import load_dotenv
+
+load_dotenv()
+
+SLACK_WEBHOOK_URL = os.environ.get('SLACK_WEBHOOK_URL')
+if SLACK_WEBHOOK_URL == None:
+    raise Exception("No Webhook url found!")
 
 def connect():
     # Fill in the parameters for your PostgreSQL database
