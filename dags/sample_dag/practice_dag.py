@@ -9,6 +9,7 @@ from dotenv import load_dotenv
 
 
 from tasks.create_dummy_schema_task import create_dummy_schema
+from tasks.load_data_task import load_data
 
 load_dotenv()
 
@@ -20,9 +21,16 @@ with DAG(
     catchup=False,
 ) as dag:
 
+    # initiatize schemas
     initialization_task = PythonOperator(
         task_id='initialization_task',
         python_callable=create_dummy_schema
+    )
+
+    # load data in the DB
+    populate_data_to_source = PythonOperator(
+        task_id="populate_data_to_source",
+        python_callable=load_data
     )
 
 
@@ -32,5 +40,5 @@ with DAG(
     )
 
 
-    initialization_task >> t1
+    initialization_task >> populate_data_to_source >> t1
     
