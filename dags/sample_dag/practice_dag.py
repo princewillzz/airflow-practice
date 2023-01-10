@@ -10,6 +10,7 @@ from dotenv import load_dotenv
 
 from tasks.create_dummy_schema_task import create_dummy_schema
 from tasks.load_data_task import load_data
+from tasks.notify_sum_task import calculate_sum_and_notify
 
 load_dotenv()
 
@@ -33,6 +34,12 @@ with DAG(
         python_callable=load_data
     )
 
+    # Define a PythonOperator to call the function to send the Slack notification
+    send_notification_task = PythonOperator(
+        task_id='send_slack_notification',
+        python_callable=calculate_sum_and_notify,
+    )
+
 
     t1 = BashOperator(
         task_id="print_date",
@@ -40,5 +47,5 @@ with DAG(
     )
 
 
-    initialization_task >> populate_data_to_source >> t1
+    initialization_task >> populate_data_to_source >> send_notification_task >> t1
     
