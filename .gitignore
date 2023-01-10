@@ -1,0 +1,16 @@
+/logs/
+/plugins/
+__pycache__
+.ipynb_checkpoints
+*.ipynb
+airflow.cfg
+webserver_config.py
+/.idea/
+tags
+.DS_Store
+/dags/autogen/
+venv/
+/standalone_admin_password.txt
+/airflow-webserver.pid
+/airflow.db
+/.coverage
