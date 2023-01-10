@@ -12,6 +12,7 @@ from tasks.create_dummy_schema_task import create_dummy_schema
 
 load_dotenv()
 
+
 with DAG(
     "slack_sql_integration_dag",
     start_date=datetime(2023, 1, 1),
